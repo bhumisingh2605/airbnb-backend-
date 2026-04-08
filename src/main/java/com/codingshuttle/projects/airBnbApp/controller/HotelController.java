@@ -9,42 +9,53 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin/hotels")
+@RequestMapping("/api/v1/admin/hotels") // ✅ FIXED PATH
 @RequiredArgsConstructor
 @Slf4j
 public class HotelController {
 
     private final HotelService hotelService;
 
+    // ✅ CREATE HOTEL
     @PostMapping
     public ResponseEntity<HotelDto> createNewHotel(@RequestBody HotelDto hotelDto) {
-        log.info("Attempting to create a new hotel with name:" + hotelDto.getName());
+        log.info("Creating hotel: {}", hotelDto.getName());
         HotelDto hotel = hotelService.createNewHotel(hotelDto);
         return new ResponseEntity<>(hotel, HttpStatus.CREATED);
     }
 
+    // ❌ REMOVED getAllHotels() to avoid conflict
+
+    // ✅ GET HOTEL BY ID
     @GetMapping("/{hotelId}")
     public ResponseEntity<HotelDto> getHotelById(@PathVariable Long hotelId) {
-        HotelDto hotelDto = hotelService.getHotelById(hotelId);
-        return ResponseEntity.ok(hotelDto);
+        return ResponseEntity.ok(
+                hotelService.getHotelById(hotelId)
+        );
     }
 
+    // ✅ UPDATE HOTEL
     @PutMapping("/{hotelId}")
-    public ResponseEntity<HotelDto> updateHotelById(@PathVariable Long hotelId, @RequestBody HotelDto hotelDto) {
-        HotelDto hotel = hotelService.updateHotelById(hotelId, hotelDto);
-        return ResponseEntity.ok(hotel);
-
+    public ResponseEntity<HotelDto> updateHotelById(
+            @PathVariable Long hotelId,
+            @RequestBody HotelDto hotelDto
+    ) {
+        return ResponseEntity.ok(
+                hotelService.updateHotelById(hotelId, hotelDto)
+        );
     }
 
+    // ✅ DELETE HOTEL
     @DeleteMapping("/{hotelId}")
     public ResponseEntity<Void> deleteHotelById(@PathVariable Long hotelId) {
-         hotelService.deleteHotelById(hotelId);
+        hotelService.deleteHotelById(hotelId);
         return ResponseEntity.noContent().build();
     }
-    @PatchMapping("/{hotelId}")
+
+    // ✅ ACTIVATE HOTEL
+    @PatchMapping("/{hotelId}/activate") // ✅ better REST design
     public ResponseEntity<Void> activateHotel(@PathVariable Long hotelId) {
         hotelService.activateHotel(hotelId);
         return ResponseEntity.noContent().build();
     }
 }
-

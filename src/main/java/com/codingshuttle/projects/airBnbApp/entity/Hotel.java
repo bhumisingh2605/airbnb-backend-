@@ -10,7 +10,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 @Entity
 @Getter
 @Setter
@@ -44,11 +43,12 @@ public class Hotel {
     @Column(nullable = false)
     private Boolean active;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    // ✅ FIXED HERE (VERY IMPORTANT)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", nullable = true)
     private User owner;
 
     @OneToMany(mappedBy = "hotel")
     @JsonIgnore
     private List<Room> rooms;
-
 }

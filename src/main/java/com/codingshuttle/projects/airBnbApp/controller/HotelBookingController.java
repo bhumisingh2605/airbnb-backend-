@@ -18,6 +18,11 @@ public class HotelBookingController {
 
     private final BookingService bookingService;
 
+    @GetMapping("/test")
+    public String test() {
+        return "backend Working";
+    }
+
     // ✅ GET ALL BOOKINGS
     @GetMapping
     public ResponseEntity<List<BookingDto>> getAllBookings() {

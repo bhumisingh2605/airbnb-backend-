@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class BookingRequest {
 
+    private Long propertyId;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private Integer roomsCount;

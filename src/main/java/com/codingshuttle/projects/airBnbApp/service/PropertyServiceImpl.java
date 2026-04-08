@@ -2,6 +2,7 @@ package com.codingshuttle.projects.airBnbApp.service;
 
 import com.codingshuttle.projects.airBnbApp.entity.Property;
 import com.codingshuttle.projects.airBnbApp.repository.PropertyRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -51,5 +52,8 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public void deleteProperty(Long id) {
         propertyRepository.deleteById(id);
+
+
+
     }
 }
